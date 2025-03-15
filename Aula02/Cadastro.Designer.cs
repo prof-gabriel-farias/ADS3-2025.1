@@ -40,6 +40,8 @@
             rbSim = new RadioButton();
             rbNao = new RadioButton();
             cbSexo = new ComboBox();
+            dvListaPessoas = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)dvListaPessoas).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -149,11 +151,20 @@
             cbSexo.Size = new Size(121, 23);
             cbSexo.TabIndex = 13;
             // 
+            // dvListaPessoas
+            // 
+            dvListaPessoas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dvListaPessoas.Location = new Point(65, 298);
+            dvListaPessoas.Name = "dvListaPessoas";
+            dvListaPessoas.Size = new Size(696, 150);
+            dvListaPessoas.TabIndex = 14;
+            // 
             // Cadastro
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(dvListaPessoas);
             Controls.Add(cbSexo);
             Controls.Add(rbNao);
             Controls.Add(rbSim);
@@ -168,6 +179,7 @@
             Controls.Add(label1);
             Name = "Cadastro";
             Text = "Cadastro";
+            ((System.ComponentModel.ISupportInitialize)dvListaPessoas).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -186,5 +198,6 @@
         private RadioButton rbSim;
         private RadioButton rbNao;
         private ComboBox cbSexo;
+        private DataGridView dvListaPessoas;
     }
 }

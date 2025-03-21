@@ -18,7 +18,7 @@ namespace Aula02
             dvListaPessoas.DataSource = listaPessoas;
         }
         List<Pessoa> listaPessoas = new List<Pessoa>();
-        
+
         public class Pessoa
         {
             public string nome { get; set; }
@@ -26,11 +26,20 @@ namespace Aula02
             public int idade { get; set; }
             public double peso { get; set; }
             public bool ativo { get; set; }
+            public int matricula { get { return gerarmatricula(); } }
+
+            private int gerarmatricula()
+            {
+                Random rd = new Random();
+                int m = rd.Next(5000);
+                return m;
+            }
         }
         private void btnCadastrar_Click(object sender, EventArgs e)
         {
 
             Pessoa person = new Pessoa();
+
             person.nome = txbNome.Text;
             person.sexo = char.Parse(cbSexo.Text.Substring(0, 1));
             person.idade = Convert.ToInt32(txbIdade.Text);
@@ -43,10 +52,26 @@ namespace Aula02
             listaPessoas.Add(person);
             dvListaPessoas.DataSource = listaPessoas.ToList();
         }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void btnExcluir_Click(object sender, EventArgs e)
         {
+            foreach (DataGridViewRow row in dvListaPessoas.SelectedRows)
+            {
+                listaPessoas.RemoveAt(row.Index);
+                dvListaPessoas.DataSource = listaPessoas.ToList();
+            }
+        }
 
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dvListaPessoas.SelectedRows)
+            {
+                Pessoa varPessoa = new Pessoa();
+                varPessoa = listaPessoas[row.Index];
+                varPessoa.nome = "ALTEREI O NOME";
+
+                listaPessoas[row.Index] = varPessoa;
+                dvListaPessoas.DataSource = listaPessoas.ToList();
+            }
         }
     }
 }

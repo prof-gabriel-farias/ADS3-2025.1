@@ -19,22 +19,7 @@ namespace Aula02
         }
         List<Pessoa> listaPessoas = new List<Pessoa>();
 
-        public class Pessoa
-        {
-            public string nome { get; set; }
-            public char sexo { get; set; }
-            public int idade { get; set; }
-            public double peso { get; set; }
-            public bool ativo { get; set; }
-            public int matricula { get { return gerarmatricula(); } }
-
-            private int gerarmatricula()
-            {
-                Random rd = new Random();
-                int m = rd.Next(5000);
-                return m;
-            }
-        }
+  
         private void btnCadastrar_Click(object sender, EventArgs e)
         {
 
@@ -67,9 +52,12 @@ namespace Aula02
             {
                 Pessoa varPessoa = new Pessoa();
                 varPessoa = listaPessoas[row.Index];
-                varPessoa.nome = "ALTEREI O NOME";
 
-                listaPessoas[row.Index] = varPessoa;
+                formEdicao f = new formEdicao(varPessoa);
+                f.ShowDialog();
+               
+
+                listaPessoas[row.Index] = f.personReturn;
                 dvListaPessoas.DataSource = listaPessoas.ToList();
             }
         }

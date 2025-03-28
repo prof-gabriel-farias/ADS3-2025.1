@@ -22,20 +22,26 @@ namespace Aula02
   
         private void btnCadastrar_Click(object sender, EventArgs e)
         {
+            bool isOk = validarCampos();
 
-            Pessoa person = new Pessoa();
+            if (isOk)
+            {
+                Pessoa person = new Pessoa();
 
-            person.nome = txbNome.Text;
-            person.sexo = char.Parse(cbSexo.Text.Substring(0, 1));
-            person.idade = Convert.ToInt32(txbIdade.Text);
-            person.peso = double.Parse(txbPeso.Text);
-            if (rbSim.Checked && rbNao.Checked == false)
-                person.ativo = true;
-            else
-                person.ativo = false;
+                person.nome = txbNome.Text;
+                person.sexo = char.Parse(cbSexo.Text.Substring(0, 1));
+                person.idade = Convert.ToInt32(txbIdade.Text);
+                person.peso = double.Parse(txbPeso.Text);
+                if (rbSim.Checked && rbNao.Checked == false)
+                    person.ativo = true;
+                else
+                    person.ativo = false;
 
-            listaPessoas.Add(person);
-            dvListaPessoas.DataSource = listaPessoas.ToList();
+                listaPessoas.Add(person);
+                dvListaPessoas.DataSource = listaPessoas.ToList();
+                string msg = limparCampos();
+                MessageBox.Show(msg);
+            }
         }
         private void btnExcluir_Click(object sender, EventArgs e)
         {
@@ -43,6 +49,32 @@ namespace Aula02
             {
                 listaPessoas.RemoveAt(row.Index);
                 dvListaPessoas.DataSource = listaPessoas.ToList();
+            }
+        }
+        public string limparCampos()
+        {
+            txbNome.Text = string.Empty;
+            txbIdade.Text = string.Empty;
+            txbPeso.Text = string.Empty;
+            rbNao.Checked = false;
+            rbSim.Checked = false;
+            cbSexo.SelectedItem = null ;
+            return "Pessoa cadastrada com sucesso";
+        }
+
+        public bool validarCampos()
+        {
+            try
+            {
+                Convert.ToInt32(txbIdade.Text);
+                char.Parse(cbSexo.Text.Substring(0, 1));
+                double.Parse(txbPeso.Text);
+                return true;
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message,"Ocorreu um Erro!");
+                return false;
             }
         }
 

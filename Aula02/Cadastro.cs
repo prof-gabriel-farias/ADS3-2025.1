@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data;
+using MySql.Data.MySqlClient;
 
 namespace Aula02
 {
@@ -16,7 +19,31 @@ namespace Aula02
         {
             InitializeComponent();
             dvListaPessoas.DataSource = listaPessoas;
+            txbPeso.Validated += TxbAlturaPeso_Validated;
+            txbAltura.Validated += TxbAlturaPeso_Validated;
         }
+
+        private void TxbAlturaPeso_Validated(object? sender, EventArgs e)
+        {
+            if (txbPeso.Text != string.Empty &&
+                txbAltura.Text != string.Empty)
+            {
+                try
+                {
+                    double peso = double.Parse(txbPeso.Text);
+                    double altura = double.Parse(txbAltura.Text);
+                    if (peso > 0 && altura > 0)
+                    {
+                        txbIMC.Text = (calcularIMC(peso, altura)).ToString();
+                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Por favor Insira apenas números em peso e altura");
+                }
+            }
+        }
+
         List<Pessoa> listaPessoas = new List<Pessoa>();
 
   
@@ -41,6 +68,8 @@ namespace Aula02
                 dvListaPessoas.DataSource = listaPessoas.ToList();
                 string msg = limparCampos();
                 MessageBox.Show(msg);
+                int contador = int.Parse(lblContador.Text) + 1;
+                lblContador.Text = contador.ToString();
             }
         }
         private void btnExcluir_Click(object sender, EventArgs e)
@@ -49,6 +78,8 @@ namespace Aula02
             {
                 listaPessoas.RemoveAt(row.Index);
                 dvListaPessoas.DataSource = listaPessoas.ToList();
+                int contador = int.Parse(lblContador.Text) - 1;
+                lblContador.Text = contador.ToString();
             }
         }
         public string limparCampos()
@@ -78,6 +109,13 @@ namespace Aula02
             }
         }
 
+        public double calcularIMC(double peso, double altura)
+        {
+            double IMC = 0;
+            IMC = (peso / (altura * altura));
+
+            return IMC;
+        }
         private void btnEditar_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewRow row in dvListaPessoas.SelectedRows)
@@ -92,6 +130,24 @@ namespace Aula02
                 listaPessoas[row.Index] = f.personReturn;
                 dvListaPessoas.DataSource = listaPessoas.ToList();
             }
+        }
+        public void SQL ()
+        {
+            MySqlConnection conn = new MySqlConnection();
+            //System.Data. cmd = new SqlCommand();
+           // string StrConnection = String.Format("Data Source={0};Initial Catalog={1};user id={2};Password={3}", Server, Database, Usuario, Senha);
+
+            //using (SqlConnection conn = new SqlConnection(StrConnection))
+            //{
+            //    conn.Open();
+            //    string sql = "INSERT INTO Alunos (Nome, Idade, altura) VALUES (@nome, @idade, @altura)";
+            //    SqlCommand cmd = new SqlCommand(sql, conn);
+            //    cmd.Parameters.AddWithValue("@nome", txbNome.Text);
+            //    cmd.Parameters.AddWithValue("@idade", Convert.ToInt32(txbIdade.Text));
+            //    cmd.Parameters.AddWithValue("@altura", txbAltura.Text);
+            //    cmd.ExecuteNonQuery();
+            //    MessageBox.Show("Aluno cadastrado!");
+            //}
         }
     }
 }

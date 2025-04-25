@@ -13,13 +13,15 @@ namespace Aula02
         public int idade { get; set; }
         public double peso { get; set; }
         public bool ativo { get; set; }
-        public int matricula { get { return gerarmatricula(); } }
+        public int matricula { get { return Gerarmatricula(); } }
+        public double altura { get; set; }
 
-        private int gerarmatricula()
+        private int Gerarmatricula()
         {
             Random rd = new Random();
             int m = rd.Next(5000);
-            return m;
+                return m;
+                     
         }
     }
 }

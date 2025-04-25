@@ -43,80 +43,95 @@
             dvListaPessoas = new DataGridView();
             btnExcluir = new Button();
             btnEditar = new Button();
+            label6 = new Label();
+            lblContador = new Label();
+            label7 = new Label();
+            txbAltura = new TextBox();
+            txbIMC = new TextBox();
+            label8 = new Label();
             ((System.ComponentModel.ISupportInitialize)dvListaPessoas).BeginInit();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(185, 56);
+            label1.Location = new Point(264, 93);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(40, 15);
+            label1.Size = new Size(61, 25);
             label1.TabIndex = 0;
             label1.Text = "Nome";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(185, 93);
+            label2.Location = new Point(264, 155);
+            label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(31, 15);
+            label2.Size = new Size(50, 25);
             label2.TabIndex = 1;
             label2.Text = "Sexo";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(185, 131);
+            label3.Location = new Point(264, 218);
+            label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
-            label3.Size = new Size(36, 15);
+            label3.Size = new Size(57, 25);
             label3.TabIndex = 2;
             label3.Text = "Idade";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(185, 169);
+            label4.Location = new Point(264, 282);
+            label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
-            label4.Size = new Size(32, 15);
+            label4.Size = new Size(49, 25);
             label4.TabIndex = 3;
             label4.Text = "Peso";
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(185, 201);
+            label5.Location = new Point(264, 335);
+            label5.Margin = new Padding(4, 0, 4, 0);
             label5.Name = "label5";
-            label5.Size = new Size(35, 15);
+            label5.Size = new Size(54, 25);
             label5.TabIndex = 4;
             label5.Text = "Ativo";
             // 
             // txbNome
             // 
-            txbNome.Location = new Point(260, 48);
+            txbNome.Location = new Point(371, 80);
+            txbNome.Margin = new Padding(4, 5, 4, 5);
             txbNome.Name = "txbNome";
-            txbNome.Size = new Size(100, 23);
+            txbNome.Size = new Size(141, 31);
             txbNome.TabIndex = 5;
             // 
             // txbIdade
             // 
-            txbIdade.Location = new Point(260, 123);
+            txbIdade.Location = new Point(371, 205);
+            txbIdade.Margin = new Padding(4, 5, 4, 5);
             txbIdade.Name = "txbIdade";
-            txbIdade.Size = new Size(100, 23);
+            txbIdade.Size = new Size(141, 31);
             txbIdade.TabIndex = 7;
             // 
             // txbPeso
             // 
-            txbPeso.Location = new Point(259, 161);
+            txbPeso.Location = new Point(370, 268);
+            txbPeso.Margin = new Padding(4, 5, 4, 5);
             txbPeso.Name = "txbPeso";
-            txbPeso.Size = new Size(100, 23);
+            txbPeso.Size = new Size(141, 31);
             txbPeso.TabIndex = 8;
             // 
             // btnCadastrar
             // 
-            btnCadastrar.Location = new Point(177, 265);
+            btnCadastrar.Location = new Point(253, 442);
+            btnCadastrar.Margin = new Padding(4, 5, 4, 5);
             btnCadastrar.Name = "btnCadastrar";
-            btnCadastrar.Size = new Size(75, 23);
+            btnCadastrar.Size = new Size(107, 38);
             btnCadastrar.TabIndex = 10;
             btnCadastrar.Text = "Cadastrar";
             btnCadastrar.UseVisualStyleBackColor = true;
@@ -125,9 +140,10 @@
             // rbSim
             // 
             rbSim.AutoSize = true;
-            rbSim.Location = new Point(261, 199);
+            rbSim.Location = new Point(373, 332);
+            rbSim.Margin = new Padding(4, 5, 4, 5);
             rbSim.Name = "rbSim";
-            rbSim.Size = new Size(45, 19);
+            rbSim.Size = new Size(67, 29);
             rbSim.TabIndex = 11;
             rbSim.TabStop = true;
             rbSim.Text = "Sim";
@@ -136,9 +152,10 @@
             // rbNao
             // 
             rbNao.AutoSize = true;
-            rbNao.Location = new Point(374, 199);
+            rbNao.Location = new Point(534, 332);
+            rbNao.Margin = new Padding(4, 5, 4, 5);
             rbNao.Name = "rbNao";
-            rbNao.Size = new Size(47, 19);
+            rbNao.Size = new Size(70, 29);
             rbNao.TabIndex = 12;
             rbNao.TabStop = true;
             rbNao.Text = "Não";
@@ -148,26 +165,27 @@
             // 
             cbSexo.FormattingEnabled = true;
             cbSexo.Items.AddRange(new object[] { "Masculino", "Feminino", "Não Definido" });
-            cbSexo.Location = new Point(261, 85);
+            cbSexo.Location = new Point(373, 142);
+            cbSexo.Margin = new Padding(4, 5, 4, 5);
             cbSexo.Name = "cbSexo";
-            cbSexo.Size = new Size(121, 23);
+            cbSexo.Size = new Size(171, 33);
             cbSexo.TabIndex = 13;
             // 
             // dvListaPessoas
             // 
             dvListaPessoas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dvListaPessoas.Location = new Point(65, 298);
+            dvListaPessoas.Location = new Point(93, 497);
+            dvListaPessoas.Margin = new Padding(4, 5, 4, 5);
             dvListaPessoas.Name = "dvListaPessoas";
             dvListaPessoas.RowHeadersWidth = 62;
-            dvListaPessoas.Size = new Size(696, 150);
+            dvListaPessoas.Size = new Size(994, 250);
             dvListaPessoas.TabIndex = 14;
             // 
             // btnExcluir
             // 
-            btnExcluir.Location = new Point(343, 265);
-            btnExcluir.Margin = new Padding(2, 2, 2, 2);
+            btnExcluir.Location = new Point(490, 442);
             btnExcluir.Name = "btnExcluir";
-            btnExcluir.Size = new Size(78, 20);
+            btnExcluir.Size = new Size(111, 33);
             btnExcluir.TabIndex = 15;
             btnExcluir.Text = "Excluir";
             btnExcluir.UseVisualStyleBackColor = true;
@@ -175,20 +193,76 @@
             // 
             // btnEditar
             // 
-            btnEditar.Location = new Point(512, 265);
-            btnEditar.Margin = new Padding(2, 2, 2, 2);
+            btnEditar.Location = new Point(731, 442);
             btnEditar.Name = "btnEditar";
-            btnEditar.Size = new Size(78, 20);
+            btnEditar.Size = new Size(111, 33);
             btnEditar.TabIndex = 16;
             btnEditar.Text = "Editar";
             btnEditar.UseVisualStyleBackColor = true;
             btnEditar.Click += btnEditar_Click;
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(827, 378);
+            label6.Name = "label6";
+            label6.Size = new Size(99, 25);
+            label6.TabIndex = 17;
+            label6.Text = "Contagem:";
+            // 
+            // lblContador
+            // 
+            lblContador.AutoSize = true;
+            lblContador.Location = new Point(932, 378);
+            lblContador.Name = "lblContador";
+            lblContador.Size = new Size(22, 25);
+            lblContador.TabIndex = 18;
+            lblContador.Text = "0";
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(691, 86);
+            label7.Name = "label7";
+            label7.Size = new Size(59, 25);
+            label7.TabIndex = 19;
+            label7.Text = "Altura";
+            // 
+            // txbAltura
+            // 
+            txbAltura.Location = new Point(756, 80);
+            txbAltura.Name = "txbAltura";
+            txbAltura.Size = new Size(150, 31);
+            txbAltura.TabIndex = 20;
+            // 
+            // txbIMC
+            // 
+            txbIMC.Location = new Point(756, 142);
+            txbIMC.Name = "txbIMC";
+            txbIMC.ReadOnly = true;
+            txbIMC.Size = new Size(150, 31);
+            txbIMC.TabIndex = 22;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(691, 148);
+            label8.Name = "label8";
+            label8.Size = new Size(44, 25);
+            label8.TabIndex = 21;
+            label8.Text = "IMC";
+            // 
             // Cadastro
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 478);
+            ClientSize = new Size(1143, 797);
+            Controls.Add(txbIMC);
+            Controls.Add(label8);
+            Controls.Add(txbAltura);
+            Controls.Add(label7);
+            Controls.Add(lblContador);
+            Controls.Add(label6);
             Controls.Add(btnEditar);
             Controls.Add(btnExcluir);
             Controls.Add(dvListaPessoas);
@@ -204,6 +278,7 @@
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
+            Margin = new Padding(4, 5, 4, 5);
             Name = "Cadastro";
             Text = "Cadastro";
             ((System.ComponentModel.ISupportInitialize)dvListaPessoas).EndInit();
@@ -228,5 +303,11 @@
         private DataGridView dvListaPessoas;
         private Button btnExcluir;
         private Button btnEditar;
+        private Label label6;
+        private Label lblContador;
+        private Label label7;
+        private TextBox txbAltura;
+        private TextBox txbIMC;
+        private Label label8;
     }
 }

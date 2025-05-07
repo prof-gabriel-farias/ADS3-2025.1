@@ -49,6 +49,7 @@
             txbAltura = new TextBox();
             txbIMC = new TextBox();
             label8 = new Label();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)dvListaPessoas).BeginInit();
             SuspendLayout();
             // 
@@ -252,11 +253,22 @@
             label8.TabIndex = 21;
             label8.Text = "IMC";
             // 
+            // button1
+            // 
+            button1.Location = new Point(738, 254);
+            button1.Name = "button1";
+            button1.Size = new Size(112, 34);
+            button1.TabIndex = 23;
+            button1.Text = "MYSQL";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // Cadastro
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1143, 797);
+            Controls.Add(button1);
             Controls.Add(txbIMC);
             Controls.Add(label8);
             Controls.Add(txbAltura);
@@ -309,5 +321,6 @@
         private TextBox txbAltura;
         private TextBox txbIMC;
         private Label label8;
+        private Button button1;
     }
 }

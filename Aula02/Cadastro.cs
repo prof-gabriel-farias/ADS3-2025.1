@@ -1,15 +1,14 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data;
-using MySql.Data.MySqlClient;
+
 
 namespace Aula02
 {
@@ -37,7 +36,7 @@ namespace Aula02
                         txbIMC.Text = (calcularIMC(peso, altura)).ToString();
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show("Por favor Insira apenas números em peso e altura");
                 }
@@ -46,7 +45,7 @@ namespace Aula02
 
         List<Pessoa> listaPessoas = new List<Pessoa>();
 
-  
+
         private void btnCadastrar_Click(object sender, EventArgs e)
         {
             bool isOk = validarCampos();
@@ -89,7 +88,7 @@ namespace Aula02
             txbPeso.Text = string.Empty;
             rbNao.Checked = false;
             rbSim.Checked = false;
-            cbSexo.SelectedItem = null ;
+            cbSexo.SelectedItem = null;
             return "Pessoa cadastrada com sucesso";
         }
 
@@ -102,9 +101,9 @@ namespace Aula02
                 double.Parse(txbPeso.Text);
                 return true;
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                MessageBox.Show(ex.Message,"Ocorreu um Erro!");
+                MessageBox.Show(ex.Message, "Ocorreu um Erro!");
                 return false;
             }
         }
@@ -125,17 +124,21 @@ namespace Aula02
 
                 formEdicao f = new formEdicao(varPessoa);
                 f.ShowDialog();
-               
+
 
                 listaPessoas[row.Index] = f.personReturn;
                 dvListaPessoas.DataSource = listaPessoas.ToList();
             }
         }
-        public void SQL ()
+        public void SQL()
         {
-            MySqlConnection conn = new MySqlConnection();
+            //string connectionSTRING = "Server=localhost,Database=Alunos,Uid=root,Pwd=mysql";
+            //MySqlConnection conn = new MySqlConnection(connectionSTRING);
+            //conn.Open();
+            //MySqlCommand cmd = new MySqlCommand();
+
             //System.Data. cmd = new SqlCommand();
-           // string StrConnection = String.Format("Data Source={0};Initial Catalog={1};user id={2};Password={3}", Server, Database, Usuario, Senha);
+            // string StrConnection = String.Format("Data Source={0};Initial Catalog={1};user id={2};Password={3}", Server, Database, Usuario, Senha);
 
             //using (SqlConnection conn = new SqlConnection(StrConnection))
             //{
@@ -148,6 +151,22 @@ namespace Aula02
             //    cmd.ExecuteNonQuery();
             //    MessageBox.Show("Aluno cadastrado!");
             //}
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            string connectionSTRING = "Server=localhost;Database=alunos;Uid=root;Password=mysql";
+            SqlConnection conn = new SqlConnection(connectionSTRING);
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand();
+            string sqlcommand = "SELECT * FROM Pessoa";
+
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlcommand, conn);
+            DataSet oDataSet = new DataSet();
+            dataAdapter.Fill(oDataSet);
+            cmd = cmd;
         }
     }
 }

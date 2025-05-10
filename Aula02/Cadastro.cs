@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Google.Protobuf.Compiler;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -62,9 +63,21 @@ namespace Aula02
                     person.ativo = true;
                 else
                     person.ativo = false;
+                person.altura = double.Parse(txbAltura.Text);
 
-                listaPessoas.Add(person);
-                dvListaPessoas.DataSource = listaPessoas.ToList();
+                string connectionSTRING = "Server=localhost\\SQLEXPRESS;Database=SantaCruz;Uid=sa;Password=santacruz;Encrypt=No";
+                SqlConnection conn = new SqlConnection(connectionSTRING);
+                conn.Open();
+
+            
+                string sqlcommand = @"INSERT INTO Pessoa (nome,sexo,idade,peso,ativo,matricula,altura)
+                                      Values ('" + person.nome + "','" + person.sexo + "'," + person.idade +
+                                      "," + person.peso + ",'" + person.ativo + "'," + person.matricula + 
+                                      "," + person.altura + ") ";
+
+                SqlCommand cmd = new SqlCommand(sqlcommand,conn);
+                 cmd.ExecuteNonQuery();
+
                 string msg = limparCampos();
                 MessageBox.Show(msg);
                 int contador = int.Parse(lblContador.Text) + 1;
@@ -75,8 +88,17 @@ namespace Aula02
         {
             foreach (DataGridViewRow row in dvListaPessoas.SelectedRows)
             {
-                listaPessoas.RemoveAt(row.Index);
-                dvListaPessoas.DataSource = listaPessoas.ToList();
+                var matricula = row.Cells["matricula"].Value;
+
+                string connectionSTRING = "Server=localhost\\SQLEXPRESS;Database=SantaCruz;Uid=sa;Password=santacruz;Encrypt=No";
+                SqlConnection conn = new SqlConnection(connectionSTRING);
+                conn.Open();
+
+                string sqlcommand = @"DELETE FROM Pessoa WHERE matricula =" + matricula;
+
+                SqlCommand cmd = new SqlCommand(sqlcommand, conn);
+                cmd.ExecuteNonQuery();
+
                 int contador = int.Parse(lblContador.Text) - 1;
                 lblContador.Text = contador.ToString();
             }
@@ -156,7 +178,7 @@ namespace Aula02
         private void button1_Click(object sender, EventArgs e)
         {
 
-            string connectionSTRING = "Server=localhost;Database=alunos;Uid=root;Password=mysql";
+            string connectionSTRING = "Server=localhost\\SQLEXPRESS;Database=SantaCruz;Uid=sa;Password=santacruz;Encrypt=No";
             SqlConnection conn = new SqlConnection(connectionSTRING);
             conn.Open();
 
@@ -166,7 +188,9 @@ namespace Aula02
             SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlcommand, conn);
             DataSet oDataSet = new DataSet();
             dataAdapter.Fill(oDataSet);
-            cmd = cmd;
+            DataTable oDataTable = new DataTable();
+            oDataTable = oDataSet.Tables[0];
+            dvListaPessoas.DataSource = oDataTable;
         }
     }
 }

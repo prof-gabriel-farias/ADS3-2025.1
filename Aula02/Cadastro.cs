@@ -15,12 +15,26 @@ namespace Aula02
 {
     public partial class Cadastro : Form
     {
+        DataAccess DAO = new DataAccess();
         public Cadastro()
         {
             InitializeComponent();
-            dvListaPessoas.DataSource = listaPessoas;
+
             txbPeso.Validated += TxbAlturaPeso_Validated;
             txbAltura.Validated += TxbAlturaPeso_Validated;
+
+            SqlConnection conn = DAO.obterConexao();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand();
+            string sqlcommand = "SELECT * FROM Pessoa";
+
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlcommand, conn);
+            DataSet oDataSet = new DataSet();
+            dataAdapter.Fill(oDataSet);
+            DataTable oDataTable = new DataTable();
+            oDataTable = oDataSet.Tables[0];
+            dvListaPessoas.DataSource = oDataTable;
         }
 
         private void TxbAlturaPeso_Validated(object? sender, EventArgs e)
@@ -65,8 +79,7 @@ namespace Aula02
                     person.ativo = false;
                 person.altura = double.Parse(txbAltura.Text);
 
-                string connectionSTRING = "Server=localhost\\SQLEXPRESS;Database=SantaCruz;Uid=sa;Password=santacruz;Encrypt=No";
-                SqlConnection conn = new SqlConnection(connectionSTRING);
+                SqlConnection conn = DAO.obterConexao();
                 conn.Open();
 
             
@@ -90,8 +103,7 @@ namespace Aula02
             {
                 var matricula = row.Cells["matricula"].Value;
 
-                string connectionSTRING = "Server=localhost\\SQLEXPRESS;Database=SantaCruz;Uid=sa;Password=santacruz;Encrypt=No";
-                SqlConnection conn = new SqlConnection(connectionSTRING);
+                SqlConnection conn = DAO.obterConexao();
                 conn.Open();
 
                 string sqlcommand = @"DELETE FROM Pessoa WHERE matricula =" + matricula;
@@ -139,17 +151,35 @@ namespace Aula02
         }
         private void btnEditar_Click(object sender, EventArgs e)
         {
+ 
             foreach (DataGridViewRow row in dvListaPessoas.SelectedRows)
             {
                 Pessoa varPessoa = new Pessoa();
-                varPessoa = listaPessoas[row.Index];
+                //varPessoa.altura = double.Parse(row.Cells["altura"].Value.ToString());
+                varPessoa.idade = int.Parse(row.Cells["idade"].Value.ToString());
+                varPessoa.ativo = bool.Parse(row.Cells["ativo"].Value.ToString());
+                varPessoa.nome = row.Cells["nome"].Value.ToString();
+                varPessoa.peso = double.Parse(row.Cells["peso"].Value.ToString());
+                varPessoa.sexo = char.Parse(row.Cells["sexo"].Value.ToString());
+                
 
                 formEdicao f = new formEdicao(varPessoa);
                 f.ShowDialog();
 
+                varPessoa = f.personReturn;
+                var matricula = row.Cells["matricula"].Value;
 
-                listaPessoas[row.Index] = f.personReturn;
-                dvListaPessoas.DataSource = listaPessoas.ToList();
+
+                SqlConnection conn = DAO.obterConexao();
+                conn.Open();
+
+                string sqlcommand = @"UPDATE Pessoa SET nome = '" + varPessoa.nome + "'" +
+                                    ",sexo = '" + varPessoa.sexo + "',idade =" + varPessoa.idade +
+                                    ",ativo ='" + varPessoa.ativo + "' ,altura =" + varPessoa.altura +
+                                    " WHERE matricula = " + matricula;
+
+                SqlCommand cmd = new SqlCommand(sqlcommand, conn);
+                cmd.ExecuteNonQuery();
             }
         }
         public void SQL()
@@ -179,18 +209,37 @@ namespace Aula02
         {
 
             string connectionSTRING = "Server=localhost\\SQLEXPRESS;Database=SantaCruz;Uid=sa;Password=santacruz;Encrypt=No";
-            SqlConnection conn = new SqlConnection(connectionSTRING);
-            conn.Open();
-
-            SqlCommand cmd = new SqlCommand();
-            string sqlcommand = "SELECT * FROM Pessoa";
-
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlcommand, conn);
-            DataSet oDataSet = new DataSet();
-            dataAdapter.Fill(oDataSet);
-            DataTable oDataTable = new DataTable();
-            oDataTable = oDataSet.Tables[0];
-            dvListaPessoas.DataSource = oDataTable;
+           
         }
     }
 }
+
+
+/*</code></pre>
+
+
+{
+    using (HttpClient client = new HttpClient())
+    {
+        try
+        {
+            string url = $"https://viacep.com.br/ws/{cep}/json/";
+            HttpResponseMessage response = await client.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+
+            string responseBody = await response.Content.ReadAsStringAsync();
+            Endereco endereco = JsonConvert.DeserializeObject<Endereco>(responseBody);
+
+            txtLogradouro.Text = endereco.logradouro;
+            txtBairro.Text = endereco.bairro;
+            txtCidade.Text = endereco.localidade;
+            txtEstado.Text = endereco.uf;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Erro ao buscar o CEP: " + ex.Message);
+        }
+    }
+
+
+</code></pre>*/

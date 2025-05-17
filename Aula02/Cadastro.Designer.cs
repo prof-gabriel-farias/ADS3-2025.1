@@ -50,6 +50,8 @@
             txbIMC = new TextBox();
             label8 = new Label();
             button1 = new Button();
+            txbCEP = new TextBox();
+            label9 = new Label();
             ((System.ComponentModel.ISupportInitialize)dvListaPessoas).BeginInit();
             SuspendLayout();
             // 
@@ -255,19 +257,37 @@
             // 
             // button1
             // 
-            button1.Location = new Point(738, 254);
+            button1.Location = new Point(869, 240);
             button1.Name = "button1";
             button1.Size = new Size(112, 34);
             button1.TabIndex = 23;
-            button1.Text = "MYSQL";
+            button1.Text = "buscar";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
+            // 
+            // txbCEP
+            // 
+            txbCEP.Location = new Point(692, 242);
+            txbCEP.Name = "txbCEP";
+            txbCEP.Size = new Size(150, 31);
+            txbCEP.TabIndex = 24;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(622, 242);
+            label9.Name = "label9";
+            label9.Size = new Size(42, 25);
+            label9.TabIndex = 25;
+            label9.Text = "CEP";
             // 
             // Cadastro
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1143, 797);
+            Controls.Add(label9);
+            Controls.Add(txbCEP);
             Controls.Add(button1);
             Controls.Add(txbIMC);
             Controls.Add(label8);
@@ -322,5 +342,7 @@
         private TextBox txbIMC;
         private Label label8;
         private Button button1;
+        private TextBox txbCEP;
+        private Label label9;
     }
 }

@@ -1,11 +1,13 @@
 ﻿using Google.Protobuf.Compiler;
 using Microsoft.Data.SqlClient;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -23,18 +25,7 @@ namespace Aula02
             txbPeso.Validated += TxbAlturaPeso_Validated;
             txbAltura.Validated += TxbAlturaPeso_Validated;
 
-            SqlConnection conn = DAO.obterConexao();
-            conn.Open();
-
-            SqlCommand cmd = new SqlCommand();
-            string sqlcommand = "SELECT * FROM Pessoa";
-
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlcommand, conn);
-            DataSet oDataSet = new DataSet();
-            dataAdapter.Fill(oDataSet);
-            DataTable oDataTable = new DataTable();
-            oDataTable = oDataSet.Tables[0];
-            dvListaPessoas.DataSource = oDataTable;
+            dvListaPessoas.DataSource = DAO.CarregarAluno();
         }
 
         private void TxbAlturaPeso_Validated(object? sender, EventArgs e)
@@ -79,20 +70,11 @@ namespace Aula02
                     person.ativo = false;
                 person.altura = double.Parse(txbAltura.Text);
 
-                SqlConnection conn = DAO.obterConexao();
-                conn.Open();
-
-            
-                string sqlcommand = @"INSERT INTO Pessoa (nome,sexo,idade,peso,ativo,matricula,altura)
-                                      Values ('" + person.nome + "','" + person.sexo + "'," + person.idade +
-                                      "," + person.peso + ",'" + person.ativo + "'," + person.matricula + 
-                                      "," + person.altura + ") ";
-
-                SqlCommand cmd = new SqlCommand(sqlcommand,conn);
-                 cmd.ExecuteNonQuery();
+                MessageBox.Show(DAO.CriarAluno(person));
 
                 string msg = limparCampos();
-                MessageBox.Show(msg);
+                dvListaPessoas.DataSource = DAO.CarregarAluno();
+
                 int contador = int.Parse(lblContador.Text) + 1;
                 lblContador.Text = contador.ToString();
             }
@@ -103,16 +85,11 @@ namespace Aula02
             {
                 var matricula = row.Cells["matricula"].Value;
 
-                SqlConnection conn = DAO.obterConexao();
-                conn.Open();
-
-                string sqlcommand = @"DELETE FROM Pessoa WHERE matricula =" + matricula;
-
-                SqlCommand cmd = new SqlCommand(sqlcommand, conn);
-                cmd.ExecuteNonQuery();
+                MessageBox.Show(DAO.ExcluirAluno(int.Parse(matricula.ToString())));
 
                 int contador = int.Parse(lblContador.Text) - 1;
                 lblContador.Text = contador.ToString();
+                dvListaPessoas.DataSource = DAO.CarregarAluno();
             }
         }
         public string limparCampos()
@@ -151,7 +128,7 @@ namespace Aula02
         }
         private void btnEditar_Click(object sender, EventArgs e)
         {
- 
+
             foreach (DataGridViewRow row in dvListaPessoas.SelectedRows)
             {
                 Pessoa varPessoa = new Pessoa();
@@ -161,7 +138,7 @@ namespace Aula02
                 varPessoa.nome = row.Cells["nome"].Value.ToString();
                 varPessoa.peso = double.Parse(row.Cells["peso"].Value.ToString());
                 varPessoa.sexo = char.Parse(row.Cells["sexo"].Value.ToString());
-                
+
 
                 formEdicao f = new formEdicao(varPessoa);
                 f.ShowDialog();
@@ -169,47 +146,41 @@ namespace Aula02
                 varPessoa = f.personReturn;
                 var matricula = row.Cells["matricula"].Value;
 
-
-                SqlConnection conn = DAO.obterConexao();
-                conn.Open();
-
-                string sqlcommand = @"UPDATE Pessoa SET nome = '" + varPessoa.nome + "'" +
-                                    ",sexo = '" + varPessoa.sexo + "',idade =" + varPessoa.idade +
-                                    ",ativo ='" + varPessoa.ativo + "' ,altura =" + varPessoa.altura +
-                                    " WHERE matricula = " + matricula;
-
-                SqlCommand cmd = new SqlCommand(sqlcommand, conn);
-                cmd.ExecuteNonQuery();
+                MessageBox.Show(DAO.EditarAluno(varPessoa, int.Parse(matricula.ToString())));
+                dvListaPessoas.DataSource = DAO.CarregarAluno();
             }
         }
-        public void SQL()
+
+
+        public async void carregarcep(string cep)
         {
-            //string connectionSTRING = "Server=localhost,Database=Alunos,Uid=root,Pwd=mysql";
-            //MySqlConnection conn = new MySqlConnection(connectionSTRING);
-            //conn.Open();
-            //MySqlCommand cmd = new MySqlCommand();
 
-            //System.Data. cmd = new SqlCommand();
-            // string StrConnection = String.Format("Data Source={0};Initial Catalog={1};user id={2};Password={3}", Server, Database, Usuario, Senha);
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    string url = $"https://viacep.com.br/ws/{cep}/json/";
+                
+                    HttpResponseMessage response = await client.GetAsync(url);
+                    response.EnsureSuccessStatusCode();
 
-            //using (SqlConnection conn = new SqlConnection(StrConnection))
-            //{
-            //    conn.Open();
-            //    string sql = "INSERT INTO Alunos (Nome, Idade, altura) VALUES (@nome, @idade, @altura)";
-            //    SqlCommand cmd = new SqlCommand(sql, conn);
-            //    cmd.Parameters.AddWithValue("@nome", txbNome.Text);
-            //    cmd.Parameters.AddWithValue("@idade", Convert.ToInt32(txbIdade.Text));
-            //    cmd.Parameters.AddWithValue("@altura", txbAltura.Text);
-            //    cmd.ExecuteNonQuery();
-            //    MessageBox.Show("Aluno cadastrado!");
-            //}
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show(responseBody);
+
+                    Endereco endereco = JsonConvert.DeserializeObject<Endereco>(responseBody);
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao buscar o CEP: " + ex.Message);
+                }
+
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            string connectionSTRING = "Server=localhost\\SQLEXPRESS;Database=SantaCruz;Uid=sa;Password=santacruz;Encrypt=No";
-           
+             carregarcep(txbCEP.Text);
         }
     }
 }

@@ -52,6 +52,11 @@
             button1 = new Button();
             txbCEP = new TextBox();
             label9 = new Label();
+            txbEndereco = new TextBox();
+            txbNumero = new TextBox();
+            label10 = new Label();
+            label11 = new Label();
+            btnUpload = new Button();
             ((System.ComponentModel.ISupportInitialize)dvListaPessoas).BeginInit();
             SuspendLayout();
             // 
@@ -257,7 +262,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(869, 240);
+            button1.Location = new Point(932, 202);
             button1.Name = "button1";
             button1.Size = new Size(112, 34);
             button1.TabIndex = 23;
@@ -267,7 +272,7 @@
             // 
             // txbCEP
             // 
-            txbCEP.Location = new Point(692, 242);
+            txbCEP.Location = new Point(756, 202);
             txbCEP.Name = "txbCEP";
             txbCEP.Size = new Size(150, 31);
             txbCEP.TabIndex = 24;
@@ -275,17 +280,66 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(622, 242);
+            label9.Location = new Point(693, 202);
             label9.Name = "label9";
             label9.Size = new Size(42, 25);
             label9.TabIndex = 25;
             label9.Text = "CEP";
+            // 
+            // txbEndereco
+            // 
+            txbEndereco.Location = new Point(756, 256);
+            txbEndereco.Multiline = true;
+            txbEndereco.Name = "txbEndereco";
+            txbEndereco.ReadOnly = true;
+            txbEndereco.Size = new Size(292, 67);
+            txbEndereco.TabIndex = 26;
+            // 
+            // txbNumero
+            // 
+            txbNumero.Location = new Point(756, 329);
+            txbNumero.Name = "txbNumero";
+            txbNumero.Size = new Size(150, 31);
+            txbNumero.TabIndex = 27;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(673, 335);
+            label10.Name = "label10";
+            label10.Size = new Size(77, 25);
+            label10.TabIndex = 28;
+            label10.Text = "Número";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(665, 256);
+            label11.Name = "label11";
+            label11.Size = new Size(85, 25);
+            label11.TabIndex = 29;
+            label11.Text = "Endereço";
+            // 
+            // btnUpload
+            // 
+            btnUpload.Location = new Point(93, 378);
+            btnUpload.Name = "btnUpload";
+            btnUpload.Size = new Size(174, 34);
+            btnUpload.TabIndex = 30;
+            btnUpload.Text = "Upload Arquivo";
+            btnUpload.UseVisualStyleBackColor = true;
+            btnUpload.Click += btnUpload_Click;
             // 
             // Cadastro
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1143, 797);
+            Controls.Add(btnUpload);
+            Controls.Add(label11);
+            Controls.Add(label10);
+            Controls.Add(txbNumero);
+            Controls.Add(txbEndereco);
             Controls.Add(label9);
             Controls.Add(txbCEP);
             Controls.Add(button1);
@@ -344,5 +398,10 @@
         private Button button1;
         private TextBox txbCEP;
         private Label label9;
+        private TextBox txbEndereco;
+        private TextBox txbNumero;
+        private Label label10;
+        private Label label11;
+        private Button btnUpload;
     }
 }

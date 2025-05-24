@@ -24,10 +24,13 @@ namespace Aula02
             {
                 SqlConnection conn = obterConexao();
                 conn.Open();
-                string sqlcommand = @"INSERT INTO Pessoa (nome,sexo,idade,peso,ativo,matricula,altura)
+                string sqlcommand = @"INSERT INTO Pessoa (nome,sexo,idade,peso,ativo,matricula,altura,
+                                        logradouro,cep,numero,bairro,cidade,UF)
                                       Values ('" + person.nome + "','" + person.sexo + "'," + person.idade +
                                         "," + person.peso + ",'" + person.ativo + "'," + person.matricula +
-                                        "," + person.altura + ") ";
+                                        "," + person.altura + ",'" + person.logradouro + "', '" + person.cep + 
+                                        "'," + person.numero + ",'" + person.bairro + "','" + person.cidade +
+                                        "','" + person.UF + "' ) ";
 
                 SqlCommand cmd = new SqlCommand(sqlcommand, conn);
                 cmd.ExecuteNonQuery();
@@ -94,3 +97,27 @@ namespace Aula02
         }
     }
 }
+
+
+/*
+    OpenFileDialog ofd = new OpenFileDialog();
+    ofd.Filter = "Arquivos de Texto|*.txt;*.csv";
+    ofd.Title = "Selecione um arquivo para importar";
+
+    if (ofd.ShowDialog() == DialogResult.OK)
+    {
+        try
+        {
+            string[] linhas = File.ReadAllLines(ofd.FileName);
+            listDados.Items.Clear();
+
+            foreach (string linha in linhas)
+            {
+                listDados.Items.Add(linha);
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Erro ao ler o arquivo: " + ex.Message);
+        }
+    }*/

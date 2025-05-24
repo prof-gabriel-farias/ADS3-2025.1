@@ -3,6 +3,7 @@ using Microsoft.Data.SqlClient;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -69,6 +70,13 @@ namespace Aula02
                 else
                     person.ativo = false;
                 person.altura = double.Parse(txbAltura.Text);
+                /**** Endereço *///
+                person.logradouro = endereco.Logradouro;
+                person.numero = int.Parse(txbNumero.Text);
+                person.bairro = endereco.Bairro;
+                person.cidade = endereco.Localidade;
+                person.UF = endereco.UF;
+                person.cep = txbCEP.Text;
 
                 MessageBox.Show(DAO.CriarAluno(person));
 
@@ -151,66 +159,69 @@ namespace Aula02
             }
         }
 
-
-        public async void carregarcep(string cep)
+        Endereco endereco = new Endereco();
+        public async Task<Endereco> carregarcep(string cep)
         {
-
             using (HttpClient client = new HttpClient())
             {
                 try
                 {
                     string url = $"https://viacep.com.br/ws/{cep}/json/";
-                
+
                     HttpResponseMessage response = await client.GetAsync(url);
                     response.EnsureSuccessStatusCode();
 
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    MessageBox.Show(responseBody);
-
-                    Endereco endereco = JsonConvert.DeserializeObject<Endereco>(responseBody);
-
+                    endereco = JsonConvert.DeserializeObject<Endereco>(responseBody);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Erro ao buscar o CEP: " + ex.Message);
                 }
-
+                return endereco;
             }
         }
-
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
-             carregarcep(txbCEP.Text);
+            Endereco endereco = new Endereco();
+            endereco = await carregarcep(txbCEP.Text);
+            txbEndereco.Text = endereco.Logradouro + " N." + txbNumero.Text + "- " + endereco.Bairro + "- " + endereco.Localidade + "/" + endereco.UF;
+        }
+        public void lerArquivo()
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Arquivos de Texto|*.txt;*.csv";
+            ofd.Title = "Selecione um arquivo para importar";
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string[] linhas = File.ReadAllLines(ofd.FileName);
+
+                    foreach (string linha in linhas)
+                    {
+                        string[] campos = linha.Split(','); 
+                        Pessoa person = new Pessoa();
+                        person.nome = campos[0];
+                        person.sexo = char.Parse(campos[1]);
+                        person.idade = int.Parse(campos[2]);
+                        person.peso = double.Parse(campos[3]);
+                        person.ativo = bool.Parse(campos[4]);
+                        DAO.CriarAluno(person);
+                    }
+                    dvListaPessoas.DataSource = DAO.CarregarAluno();
+                    MessageBox.Show(linhas.Count().ToString() + " Alunos criados através do upload de arquivo");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao ler o arquivo: " + ex.Message);
+                }
+            }
+        }
+        private void btnUpload_Click(object sender, EventArgs e)
+        {
+            lerArquivo();
         }
     }
 }
-
-
-/*</code></pre>
-
-
-{
-    using (HttpClient client = new HttpClient())
-    {
-        try
-        {
-            string url = $"https://viacep.com.br/ws/{cep}/json/";
-            HttpResponseMessage response = await client.GetAsync(url);
-            response.EnsureSuccessStatusCode();
-
-            string responseBody = await response.Content.ReadAsStringAsync();
-            Endereco endereco = JsonConvert.DeserializeObject<Endereco>(responseBody);
-
-            txtLogradouro.Text = endereco.logradouro;
-            txtBairro.Text = endereco.bairro;
-            txtCidade.Text = endereco.localidade;
-            txtEstado.Text = endereco.uf;
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show("Erro ao buscar o CEP: " + ex.Message);
-        }
-    }
-
-
-</code></pre>*/

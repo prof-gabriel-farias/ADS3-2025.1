@@ -1,0 +1,4 @@
+aluno1,M,18,80,true
+aluno2,F,30,55,false
+aluno3,M,19,102,false
+aluno4,N,26,63,true

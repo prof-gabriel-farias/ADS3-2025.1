@@ -201,7 +201,7 @@ namespace Aula02
 
                     foreach (string linha in linhas)
                     {
-                        string[] campos = linha.Split(','); 
+                        string[] campos = linha.Split(',');
                         Pessoa person = new Pessoa();
                         person.nome = campos[0];
                         person.sexo = char.Parse(campos[1]);
@@ -223,5 +223,92 @@ namespace Aula02
         {
             lerArquivo();
         }
+
+        private void btnExportar_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Arquivo CSV|*.csv";
+            sfd.Title = "Salvar como CSV";
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    using (StreamWriter sw = new StreamWriter(sfd.FileName))
+                    {
+   
+                        for (int i = 0; i < dvListaPessoas.Columns.Count; i++)
+                        {
+                            sw.Write(dvListaPessoas.Columns[i].HeaderText);
+                            if (i < dvListaPessoas.Columns.Count - 1)
+                                sw.Write(";");
+                        }
+                        sw.WriteLine();
+
+                        foreach (DataGridViewRow row in dvListaPessoas.Rows)
+                        {
+                            if (row.IsNewRow == false)
+                            {
+                                for (int i = 0; i < dvListaPessoas.Columns.Count; i++)
+                                {
+                                    sw.Write(row.Cells[i].Value);
+                                    if (i < dvListaPessoas.Columns.Count - 1)
+                                        sw.Write(";");
+                                }
+                                sw.WriteLine();
+                            }
+                        }
+                    }
+                    MessageBox.Show("Arquivo CSV exportado com sucesso!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao exportar: " + ex.Message);
+                }
+            }
+        }
+        /* private void btnExportar_Click(object sender, EventArgs e)
+{
+    
+
+    if (sfd.ShowDialog() == DialogResult.OK)
+    {
+        try
+        {
+            using (StreamWriter sw = new StreamWriter(sfd.FileName))
+            {
+                // Cabeçalhos
+                for (int i = 0; i < dataGridView1.Columns.Count; i++)
+                {
+                    sw.Write(dataGridView1.Columns[i].HeaderText);
+                    if (i < dataGridView1.Columns.Count - 1)
+                        sw.Write(";");
+                }
+                sw.WriteLine();
+
+                // Linhas
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    if (!row.IsNewRow)
+                    {
+                        for (int i = 0; i < dataGridView1.Columns.Count; i++)
+                        {
+                            sw.Write(row.Cells[i].Value);
+                            if (i < dataGridView1.Columns.Count - 1)
+                                sw.Write(";");
+                        }
+                        sw.WriteLine();
+                    }
+                }
+            }
+
+            MessageBox.Show("Arquivo CSV exportado com sucesso!");
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Erro ao exportar: " + ex.Message);
+        }
+    }
+}*/
     }
 }

@@ -57,6 +57,7 @@
             label10 = new Label();
             label11 = new Label();
             btnUpload = new Button();
+            btnExportar = new Button();
             ((System.ComponentModel.ISupportInitialize)dvListaPessoas).BeginInit();
             SuspendLayout();
             // 
@@ -136,7 +137,7 @@
             // 
             // btnCadastrar
             // 
-            btnCadastrar.Location = new Point(253, 442);
+            btnCadastrar.Location = new Point(318, 437);
             btnCadastrar.Margin = new Padding(4, 5, 4, 5);
             btnCadastrar.Name = "btnCadastrar";
             btnCadastrar.Size = new Size(107, 38);
@@ -191,7 +192,7 @@
             // 
             // btnExcluir
             // 
-            btnExcluir.Location = new Point(490, 442);
+            btnExcluir.Location = new Point(534, 440);
             btnExcluir.Name = "btnExcluir";
             btnExcluir.Size = new Size(111, 33);
             btnExcluir.TabIndex = 15;
@@ -201,7 +202,7 @@
             // 
             // btnEditar
             // 
-            btnEditar.Location = new Point(731, 442);
+            btnEditar.Location = new Point(767, 437);
             btnEditar.Name = "btnEditar";
             btnEditar.Size = new Size(111, 33);
             btnEditar.TabIndex = 16;
@@ -330,11 +331,22 @@
             btnUpload.UseVisualStyleBackColor = true;
             btnUpload.Click += btnUpload_Click;
             // 
+            // btnExportar
+            // 
+            btnExportar.Location = new Point(99, 424);
+            btnExportar.Name = "btnExportar";
+            btnExportar.Size = new Size(168, 34);
+            btnExportar.TabIndex = 31;
+            btnExportar.Text = "Exportar Dados";
+            btnExportar.UseVisualStyleBackColor = true;
+            btnExportar.Click += btnExportar_Click;
+            // 
             // Cadastro
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1143, 797);
+            Controls.Add(btnExportar);
             Controls.Add(btnUpload);
             Controls.Add(label11);
             Controls.Add(label10);
@@ -403,5 +415,6 @@
         private Label label10;
         private Label label11;
         private Button btnUpload;
+        private Button btnExportar;
     }
 }

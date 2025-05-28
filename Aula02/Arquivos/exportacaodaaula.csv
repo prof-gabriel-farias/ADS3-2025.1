@@ -1,0 +1,9 @@
+nome;sexo;idade;peso;ativo;matricula;altura;cep;logradouro;numero;bairro;cidade;UF
+cebola;M;25;12,00;True;4925;0,00;;;;;;
+Gabriel;M;18;50,00;False;2032;164,00;;;;;;
+aluno da usc;M;12;32,00;True;3462;1,00;;Rua Affife Mansur;;;;
+Santacruz;N;31;1,00;True;2014;1,00;81050-180;Rua Affife Mansur;565;Novo Mundo;Curitiba;PR
+aluno1;M;18;80,00;True;1090;0,00;;;0;;;
+aluno2;F;30;55,00;False;3077;0,00;;;0;;;
+aluno3;M;19;102,00;False;3289;0,00;;;0;;;
+aluno4;N;26;63,00;True;1985;0,00;;;0;;;
